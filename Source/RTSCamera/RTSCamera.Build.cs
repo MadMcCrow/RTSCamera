@@ -32,7 +32,8 @@ public class RTSCamera : ModuleRules
 			new string[]
 			{
 				"CoreUObject",
-				"Engine"
+				"Engine",
+				"UMG"
 			}
 			);
 		
