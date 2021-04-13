@@ -1,14 +1,13 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+/* Copyright © Noé Perard-Gayot 2021. Licensed under the MIT License. You may obtain a copy of the License at https://opensource.org/licenses/mit-license.php */
 #pragma once
 
 #include "CoreMinimal.h"
-#include "/GameFramework/SpectatorPawn.h"
+#include "GameFramework/SpectatorPawn.h"
 #include "RTSCameraPawn.generated.h"
 
 
 UCLASS(Category = "Camera")
-class WH_CAMERA_API ARTSCameraPawn : public ASpectatorPawn
+class RTSCAMERA_API ARTSCameraPawn : public ASpectatorPawn
 {
 	GENERATED_BODY()
 
@@ -26,9 +25,6 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	virtual UPawnMovementComponent* GetMovementComponent() const override;
-
 
 protected:
 
@@ -73,12 +69,6 @@ private:
 	 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess))
 	class USpringArmComponent* CameraBoomComponent;
-
-	/**
-	 *	Movement Component for this pawn
-	 */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess))
-	class URTSCameraMovementComponent* MovementComponent;
 
 	/**
 	 *	Mouse Component for this pawn

@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+/* Copyright © Noé Perard-Gayot 2021. Licensed under the MIT License. You may obtain a copy of the License at https://opensource.org/licenses/mit-license.php */
 
 #include "RTSCameraPawn.h"
 #include "Components/RTSCameraComponent.h"
@@ -9,7 +8,6 @@
 
 // Components static Names
 FName ARTSCameraPawn::CameraComponentName	 = FName("CameraComponent");
-FName ARTSCameraPawn::MovementComponentName	 = FName("MovementComponent");
 FName ARTSCameraPawn::MouseComponentName		 = FName("MouseComponent");
 FName ARTSCameraPawn::CameraBoomComponentName = FName("CameraBoomComponent");
 
@@ -78,11 +76,6 @@ void ARTSCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis(InputAxisForwardName, this, &ARTSCameraPawn::MoveAxisForward);
 	PlayerInputComponent->BindAxis(InputAxisRightName,   this, &ARTSCameraPawn::MoveAxisRight);
 	PlayerInputComponent->BindAxis(InputAxisZoomName,	 this, &ARTSCameraPawn::Zoom);
-}
-
-UPawnMovementComponent* ARTSCameraPawn::GetMovementComponent() const
-{
-	return MovementComponent;
 }
 
 void ARTSCameraPawn::SetFreeCamera(bool IsFree)

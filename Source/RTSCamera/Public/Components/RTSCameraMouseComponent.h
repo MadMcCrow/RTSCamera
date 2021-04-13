@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/* Copyright © Noé Perard-Gayot 2021. Licensed under the MIT License. You may obtain a copy of the License at https://opensource.org/licenses/mit-license.php */
 
 #pragma once
 
@@ -26,7 +26,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FBorderEvent);
  *	component to handle mouse movement for the camera
  */
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), Category = "Mouse")
-class WH_CAMERA_API URTSCameraMouseComponent : public UActorComponent
+class RTSCAMERA_API URTSCameraMouseComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

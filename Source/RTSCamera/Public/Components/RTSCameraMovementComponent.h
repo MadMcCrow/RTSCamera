@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/* Copyright © Noé Perard-Gayot 2021. Licensed under the MIT License. You may obtain a copy of the License at https://opensource.org/licenses/mit-license.php */
 
 #pragma once
 
@@ -10,7 +10,7 @@
  *	Movement Component for CameraPawn
  */
 UCLASS()
-class WH_CAMERA_API URTSCameraMovementComponent : public UFloatingPawnMovement
+class RTSCAMERA_API URTSCameraMovementComponent : public UFloatingPawnMovement
 {
 	GENERATED_BODY()
 
