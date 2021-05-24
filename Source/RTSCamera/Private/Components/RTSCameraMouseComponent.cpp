@@ -42,7 +42,7 @@ FVector2D URTSCameraMouseComponent::GetScreenRelativeMousePosition() const
 void URTSCameraMouseComponent::UpdateMouseBorders()
 {
 	const FVector2D pos = GetScreenRelativeMousePosition();
-	const uint8 previous = ScreenBorderDirection;
+	const uint8 previous = 	ScreenBorderDirection;
 
 	// Left
 	if (pos.X <= BorderSize && (pos.X >= 0 || OutsideMovement))

@@ -11,8 +11,8 @@ FName ARTSCameraPawn::CameraComponentName	 = FName("CameraComponent");
 FName ARTSCameraPawn::MouseComponentName		 = FName("MouseComponent");
 FName ARTSCameraPawn::CameraBoomComponentName = FName("CameraBoomComponent");
 
-// Sets default values
-ARTSCameraPawn::ARTSCameraPawn(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer.SetDefaultSubobjectClass<URTSCameraMovementComponent>(ASpectatorPawn::MovementComponentName))
+// Sets default values, avoid the spectator construct
+ARTSCameraPawn::ARTSCameraPawn(const FObjectInitializer& ObjectInitializer) : Super( ObjectInitializer.SetDefaultSubobjectClass<URTSCameraMovementComponent>(Super::MovementComponentName))
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -21,9 +21,8 @@ ARTSCameraPawn::ARTSCameraPawn(const FObjectInitializer& ObjectInitializer) : Su
 	BaseMovementSpeed = 10.f;
 	MaxZoom = 7000.f;
 	MinZoom = 300.f;
-
+	
 	// Create Components
-	RootComponent		= ObjectInitializer.CreateDefaultSubobject<USceneComponent>(this, "RootComponent");
 	CameraComponent		= ObjectInitializer.CreateDefaultSubobject<URTSCameraComponent>(this, CameraComponentName);
 	CameraBoomComponent = ObjectInitializer.CreateDefaultSubobject<USpringArmComponent>(this, CameraBoomComponentName);
 	MouseComponent		= ObjectInitializer.CreateDefaultSubobject<URTSCameraMouseComponent>(this, MouseComponentName);
@@ -62,7 +61,7 @@ void ARTSCameraPawn::Tick(float DeltaTime)
 		float scale = 0;
 		FVector2D border = MouseComponent->GetBorderDirection();
 		border.ToDirectionAndLength(border, scale);
-		AddMovementInput(FVector(border, 0.f), scale * scale * MovementSpeed()  );
+		AddMovementInput(FVector(border, 0.f), scale * scale * GetMovementSpeed() * DeltaTime );
 	}
 
 	CameraTracking();
@@ -72,10 +71,9 @@ void ARTSCameraPawn::Tick(float DeltaTime)
 // Called to bind functionality to input
 void ARTSCameraPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis(InputAxisForwardName, this, &ARTSCameraPawn::MoveAxisForward);
-	PlayerInputComponent->BindAxis(InputAxisRightName,   this, &ARTSCameraPawn::MoveAxisRight);
-	PlayerInputComponent->BindAxis(InputAxisZoomName,	 this, &ARTSCameraPawn::Zoom);
+	PlayerInputComponent->BindAxis(InputAxisForwardName, this, &ARTSCameraPawn::MoveAxisForward).bConsumeInput = false;
+	PlayerInputComponent->BindAxis(InputAxisRightName,   this, &ARTSCameraPawn::MoveAxisRight).bConsumeInput = false;
+	PlayerInputComponent->BindAxis(InputAxisZoomName,	 this, &ARTSCameraPawn::Zoom).bConsumeInput = false;
 }
 
 void ARTSCameraPawn::SetFreeCamera(bool IsFree)
@@ -97,7 +95,7 @@ void ARTSCameraPawn::FollowActor(AActor* Target)
 
 void ARTSCameraPawn::MoveAxisForward(float AxisValue)
 {
-	AddMovementInput(GetActorForwardVector(), AxisValue * MovementSpeed());
+	AddMovementInput(GetActorForwardVector(), AxisValue * GetMovementSpeed());
 	SetFreeCamera(true);
 }
 
@@ -124,11 +122,11 @@ void ARTSCameraPawn::CameraTracking()
 		FVector direction;
 		float length;
 		(TrackedActor->GetActorLocation() - GetActorLocation()).ToDirectionAndLength(direction, length);
-		AddMovementInput(direction, FMath::Min<float>(length, MovementSpeed()));
+		AddMovementInput(direction, FMath::Min<float>(length, GetMovementSpeed()));
 	}
 }
 
-float ARTSCameraPawn::MovementSpeed() const
+float ARTSCameraPawn::GetMovementSpeed_Implementation() const
 {
 	return FMath::Sqrt(ZoomDistance) * BaseMovementSpeed;
 }

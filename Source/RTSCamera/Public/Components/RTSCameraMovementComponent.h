@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/FloatingPawnMovement.h"
+#include "GameFramework/SpectatorPawnMovement.h"
 #include "RTSCameraMovementComponent.generated.h"
 
 /**
  *	Movement Component for CameraPawn
  */
 UCLASS()
-class RTSCAMERA_API URTSCameraMovementComponent : public UFloatingPawnMovement
+class RTSCAMERA_API URTSCameraMovementComponent : public USpectatorPawnMovement
 {
 	GENERATED_BODY()
 

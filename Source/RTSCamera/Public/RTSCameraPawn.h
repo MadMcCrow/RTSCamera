@@ -20,11 +20,15 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	// avoid call from 
+	virtual void UpdateNavigationRelevance() override {APawn::UpdateNavigationRelevance();};
 
 protected:
 
@@ -93,7 +97,7 @@ public:
 	void FollowActor(class AActor* Target);
 
 
-private:
+protected:
 
 	/** Move camera to the front / back */
 	UFUNCTION()
@@ -111,15 +115,15 @@ private:
 	UFUNCTION()
 	void CameraTracking();
 
-	UFUNCTION()
-	virtual float MovementSpeed() const;
+	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
+	float GetMovementSpeed() const;
+	virtual float GetMovementSpeed_Implementation() const;
 
 private:
 
 	/** Camera can move freely */
 	UPROPERTY(Transient)
 	bool bIsFreeCamera;
-
 
 	/** Camera can move freely */
 	UPROPERTY(Transient)
